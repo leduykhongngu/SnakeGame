@@ -1,6 +1,6 @@
 {$mode objfpc}
 {$COperators on}
-uses graph,wincrt,gvector;
+uses windows,graph,wincrt,gvector;;
 type    int = SmallInt;
         TPoint = record
                 x,y:int;
@@ -30,8 +30,10 @@ begin
         cnt:=0;
         repeat
                 inc(cnt);
-                CurFood.x:=random(GetMaxX) div Snake.Speed*Snake.Speed;
-                CurFood.y:=random(GetMaxY) div Snake.Speed*Snake.Speed;
+                CurFood.x:=(random(GetMaxX) div Snake.Speed-2)*Snake.Speed;
+                CurFood.y:=(random(GetMaxY) div Snake.Speed-2)*Snake.Speed;
+                CurFood.x:=max(CurFood.x,Snake.speed*2);
+                CurFood.y:=max(CurFood.y,Snake.speed*2);
                 if (cnt>10) then begin
                         IsGameOver:=true;
                         exit;
@@ -56,7 +58,7 @@ begin
                 3: Head.x+=speed;
                 4: Head.x-=speed;
         end;
-        if (Head.x<0) or (Head.x>GetMaxX div speed*speed) or (Head.y<0) or (Head.y>GetMaxY div speed*speed) then begin
+        if (Head.x<speed) or (Head.x>GetMaxX -speed) or (Head.y<speed) or (Head.y>GetMaxY -speed) then begin
                 IsGameOver:=true;
                 exit();
         end;
@@ -98,6 +100,7 @@ begin
         gm:=0;
         InitGraph(gn,gm,'');
         ClearViewPort();
+        SetWindowText(GraphWindow,'Snake Game by leduykhongngu');
 end;
 function GetKey():int;
 begin
@@ -115,6 +118,10 @@ procedure DoTheGame();
 var     tmp,pretmp:int;
 begin
         Snake:=TSnake.create();
+        SetFillStyle(1,3);
+        bar(0,0,GetMaxX,GetMaxY);
+        SetFillStyle(1,0);
+        bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
         Snake.Show();
         CreateNewFood();
         SetFillStyle(1,5);
@@ -127,7 +134,7 @@ begin
                         pretmp:=tmp;
                         Snake.Update(tmp);
                         SetFillStyle(1,0);
-                        bar(0,0,GetMaxX,GetMaxY);
+                        bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
                         Snake.Show();
                         SetFillStyle(1,5);
                         bar(CurFood.x,CurFood.y,CurFood.x+Snake.speed,CurFood.y+Snake.speed);
@@ -136,7 +143,7 @@ begin
                 else begin
                         Snake.Update(pretmp);
                         SetFillStyle(1,0);
-                        bar(0,0,GetMaxX,GetMaxY);
+                        bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
                         Snake.Show();
                         SetFillStyle(1,5);
                         bar(CurFood.x,CurFood.y,CurFood.x+Snake.speed,CurFood.y+Snake.speed);
@@ -151,4 +158,3 @@ begin
         DoTheGame();
         CloseGraph();
 end.
-
