@@ -4,7 +4,7 @@ Source code ở file SnakeGame.Pas.
 
 Nên dùng FPC 3.0.0 trở lên để biên dịch, chạy trên môi trường Windows
 
-Dùng phím mủi tên để điều khiển rắn, muốn thoát ra thì nhấn phím bất kì ngoài 4 phím mủi tên. 
+Dùng phím mũi tên để điều khiển rắn, muốn thoát ra thì nhấn phím bất kì ngoài 4 phím mũi tên. 
 
 Nếu rắn chạy ra khỏi bảng hoặc tự cắn vào chính bản thân thì sẽ kết thúc game. 
 
