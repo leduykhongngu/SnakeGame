@@ -1,6 +1,6 @@
 {$mode objfpc}
 {$COperators on}
-uses windows,graph,wincrt,gvector;;
+uses windows,graph,wincrt,gvector;
 type    int = SmallInt;
         TPoint = record
                 x,y:int;
@@ -58,7 +58,7 @@ begin
                 3: Head.x+=speed;
                 4: Head.x-=speed;
         end;
-        if (Head.x<speed) or (Head.x>GetMaxX -speed) or (Head.y<speed) or (Head.y>GetMaxY -speed) then begin
+        if (Head.x<speed) or (Head.x>GetMaxX -speed-speed) or (Head.y<speed) or (Head.y>GetMaxY -speed-speed) then begin
                 IsGameOver:=true;
                 exit();
         end;
@@ -124,8 +124,9 @@ begin
         bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
         Snake.Show();
         CreateNewFood();
+        SetColor(5);
         SetFillStyle(1,5);
-        bar(CurFood.x,CurFood.y,CurFood.x+Snake.speed,CurFood.y+Snake.speed);
+        FillEllipse(CurFood.x+(Snake.Speed+1) div 2,CurFood.y+(Snake.Speed+1) div 2,Snake.Speed div 2,Snake.Speed div 2);
         pretmp:=1;
         while (not IsGameOver) do begin
                 if (keypressed) then begin
@@ -137,7 +138,7 @@ begin
                         bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
                         Snake.Show();
                         SetFillStyle(1,5);
-                        bar(CurFood.x,CurFood.y,CurFood.x+Snake.speed,CurFood.y+Snake.speed);
+                        FillEllipse(CurFood.x+(Snake.Speed+1) div 2,CurFood.y+(Snake.Speed+1) div 2,Snake.Speed div 2,Snake.Speed div 2);
                         //writeln(tmp);
                 end
                 else begin
@@ -145,8 +146,9 @@ begin
                         SetFillStyle(1,0);
                         bar(Snake.speed,Snake.Speed,GetMaxX-Snake.Speed,GetMAxY-Snake.Speed);
                         Snake.Show();
+                        SetColor(5);
                         SetFillStyle(1,5);
-                        bar(CurFood.x,CurFood.y,CurFood.x+Snake.speed,CurFood.y+Snake.speed);
+                        FillEllipse(CurFood.x+(Snake.Speed+1) div 2,CurFood.y+(Snake.Speed+1) div 2,Snake.Speed div 2,Snake.Speed div 2);
                         //writeln(pretmp);
                 end;
                 delay(100);
